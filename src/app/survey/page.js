@@ -9,6 +9,7 @@ import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import UAParser from "ua-parser-js";
 import countryList from 'country-list';
 
+
 export default function Survey() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -23,6 +24,7 @@ export default function Survey() {
     ip: "",
     gender: "",
     age: "",
+    linkedlist: "", // New field for linkedlist parameter
   });
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
@@ -33,10 +35,18 @@ export default function Survey() {
   useEffect(() => {
     if (router.isReady) {
       const location = router.query.location;
+            const linkedlist = router.query.linkedlist; // Extract the linkedlist parameter
+
       if (location) {
         setForm((prevForm) => ({
           ...prevForm,
           country: location,
+        }));
+      }
+       if (linkedlist) {
+        setForm((prevForm) => ({
+          ...prevForm,
+          linkedlist: linkedlist,
         }));
       }
     }
@@ -156,6 +166,7 @@ export default function Survey() {
             name: user.displayName || "",
             email: user.email || "",
             country: detectedCountry, // Set the country from IP
+            
           }));
         } else {
           router.push("/");
@@ -188,7 +199,9 @@ export default function Survey() {
       form.postal &&
       form.device &&
       form.browser &&
-      form.ip
+      form.ip &&
+            form.linkedlist // Ensure linkedlist is included in the form validation
+
       // form.ip &&
       // form.age
     ) {
@@ -211,6 +224,8 @@ export default function Survey() {
           ip: form.ip,
           gender: form.gender,
           age: form.age,
+                    linkedlist: form.linkedlist, // Save the linkedlist parameter
+
           timestamp: new Date(),
         });
         console.log("Document written with ID: ", docRef.id , docRef);
@@ -226,6 +241,8 @@ export default function Survey() {
           ip: "",
           gender: "",
           age: "",
+                    linkedlist: "", // Reset linkedlist field
+
         });
         router.push("/Dashboard");
       } catch (error) {
@@ -298,6 +315,19 @@ export default function Survey() {
                 name="phone"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row">
+              <label htmlFor="linkedlist" className="md:w-[150px] text-xl">
+                Link Address with Parameter
+              </label>
+              <input
+                type="text"
+                id="linkedlist"
+                name="linkedlist"
+                value={form.linkedlist}
+                onChange={(e) => setForm({ ...form, linkedlist: e.target.value })}
                 className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
               />
             </div>
