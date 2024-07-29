@@ -7,6 +7,7 @@ import 'dotenv/config'
 const firebaseConfig = {
   apiKey: "AIzaSyAs-VtzaGW1UNQ2mLJ_sRHC63FoZpa0L-4",
   authDomain: "morafiq-aviation-services.firebaseapp.com",
+  databaseURL: "https://morafiq-aviation-services-default-rtdb.firebaseio.com",
   projectId: "morafiq-aviation-services",
   storageBucket: "morafiq-aviation-services.appspot.com",
   messagingSenderId: "46889375086",
