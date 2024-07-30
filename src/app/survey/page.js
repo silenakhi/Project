@@ -263,7 +263,7 @@ export default function Survey() {
       )}
       <div>
         <h1 className="text-4xl font-bold text-black text-center mb-8">
-          Lead Generation Form
+          Submit to claim your vouchers, Now! 
         </h1>
 
         <form
