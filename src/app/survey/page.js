@@ -35,7 +35,7 @@ export default function Survey() {
   useEffect(() => {
     if (router.isReady) {
       const location = router.query.location;
-            const linkedlist = router.query.linkedlist; // Extract the linkedlist parameter
+      const linkedlist = router.query.linkedlist; 
 
       if (location) {
         setForm((prevForm) => ({
