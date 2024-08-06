@@ -61,7 +61,7 @@ const login = ()=>{
           ) : (
             <div className="flex flex-col justify-center items-center gap-6 w-full max-w-md mx-auto">
               <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-                &lt;<span className="text-blue-600">Sign in to claim the voucher</span>/&gt;
+                &lt;<span className="text-blue-600">Sign In, now!</span>/&gt;
               </h1>
               <div className="flex flex-col gap-4 w-full">
                 <button
