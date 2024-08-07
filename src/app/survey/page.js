@@ -35,7 +35,7 @@ export default function Survey() {
   useEffect(() => {
     if (router.isReady) {
       const urlParams = new URLSearchParams(window.location.search);
-      const linkedlist = urlParams.get('loc');
+      const linkedlist = urlParams.get('location');
       //const location = router.query.location;
       //const linkedlist = router.query.linkedlist; 
 
