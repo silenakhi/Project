@@ -92,7 +92,7 @@ const login = ()=>{
                 </button>
                 <button
                   onClick={signIn}
-                  className="flex gap-3 justify-center items-center bg-black-700 text-white hover:bg-black-800 focus:outline-none focus:ring-2 focus:ring-black-700 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
+                  className="flex gap-3 justify-center items-center bg-blue-700 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
                 >
                   <span className="text-lg font-medium">
                     Sign In
