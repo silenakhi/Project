@@ -34,8 +34,10 @@ export default function Survey() {
   // Initialize form based on URL parameter
   useEffect(() => {
     if (router.isReady) {
-      const location = router.query.location;
-      const linkedlist = router.query.linkedlist; 
+      const urlParams = new URLSearchParams(window.location.search);
+      const linkedlist = urlParams.get('loc');
+      //const location = router.query.location;
+      //const linkedlist = router.query.linkedlist; 
 
       if (location) {
         setForm((prevForm) => ({
@@ -320,7 +322,7 @@ export default function Survey() {
             </div>
             <div className="flex flex-col items-center md:gap-5 md:flex-row">
               <label htmlFor="linkedlist" className="md:w-[150px] text-xl">
-                Link Address with Parameter
+                Location
               </label>
               <input
                 type="text"
