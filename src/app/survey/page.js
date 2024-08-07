@@ -168,9 +168,9 @@ export default function Survey() {
             country: detectedCountry, // Set the country from IP
             
           }));
-        } else {
-          router.push("/");
-        }
+        } //else {
+          //router.push("/");
+        //}
       });
 
       return () => unsubscribe();
