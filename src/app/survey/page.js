@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
@@ -15,15 +16,15 @@ export default function Survey() {
     name: "",
     email: "",
     phone: "",
-    country: "", // Optional
-    city: "", // Optional
-    postal: "", // Optional
+    country: "", // Default empty
+    city: "",
+    postal: "",
     device: "",
     browser: "",
     ip: "",
-    gender: "", // Optional
-    age: "", // Optional
-    linkedlist: "", // Optional parameter
+    gender: "",
+    age: "",
+    linkedlist: "", // New field for linkedlist parameter
   });
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
@@ -36,7 +37,7 @@ export default function Survey() {
       const urlParams = new URLSearchParams(window.location.search);
       const linkedlist = urlParams.get('location');
       //const location = router.query.location;
-      //const linkedlist = router.query.linkedlist; 
+      //const linkedlist = router.query.linkedlist; 
 
       if (location) {
         setForm((prevForm) => ({
@@ -44,7 +45,7 @@ export default function Survey() {
           country: location,
         }));
       }
-      if (linkedlist) {
+       if (linkedlist) {
         setForm((prevForm) => ({
           ...prevForm,
           linkedlist: linkedlist,
@@ -67,9 +68,11 @@ export default function Survey() {
     setForm((prevForm) => ({
       ...prevForm,
       [name]: value,
-      city: "", // Clear city on other field changes (optional)
-      postal: "", // Clear postal code on other field changes (optional)
+      city: "",
+      postal: "",
     }));
+
+    
 
     if (name === "country") {
       handleLocationChange(e);
@@ -165,9 +168,10 @@ export default function Survey() {
             name: user.displayName || "",
             email: user.email || "",
             country: detectedCountry, // Set the country from IP
+            
           }));
         } //else {
-        //router.push("/");
+          //router.push("/");
         //}
       });
 
@@ -191,9 +195,22 @@ export default function Survey() {
     if (
       form.name &&
       form.email &&
-      form.phone
-      // Other fields are not required for validation
+      form.phone &&
+      form.country &&
+      form.city &&
+      form.postal &&
+      form.device &&
+      form.browser &&
+      form.ip &&
+            form.linkedlist // Ensure linkedlist is included in the form validation
+
+      // form.ip &&
+      // form.age
     ) {
+      // if (form.age < 1) {
+      //   setError("Age should be greater than 0");
+      //   return;
+      // }
       try {
         const docRef = await addDoc(collection(db, "info"), {
           name: form.name,
@@ -209,10 +226,11 @@ export default function Survey() {
           ip: form.ip,
           gender: form.gender,
           age: form.age,
-          linkedlist: form.linkedlist, // Save the linkedlist parameter
+                    linkedlist: form.linkedlist, // Save the linkedlist parameter
+
           timestamp: new Date(),
         });
-        console.log("Document written with ID: ", docRef.id, docRef);
+        console.log("Document written with ID: ", docRef.id , docRef);
         setForm({
           name: "",
           email: "",
@@ -225,7 +243,8 @@ export default function Survey() {
           ip: "",
           gender: "",
           age: "",
-          linkedlist: "", // Reset linkedlist field
+                    linkedlist: "", // Reset linkedlist field
+
         });
         router.push("/Dashboard");
       } catch (error) {
@@ -233,7 +252,7 @@ export default function Survey() {
         setError("Failed to submit form. Please try again later.");
       }
     } else {
-      setError("Please fill all required fields (Name, Email, Phone)");
+      setError("Please fill all the fields");
     }
   };
 
@@ -246,7 +265,7 @@ export default function Survey() {
       )}
       <div>
         <h1 className="text-4xl font-bold text-black text-center mb-8">
-          Submit to claim your vouchers, Now! 
+          Submit to claim your vouchers, Now! 
         </h1>
 
         <form
@@ -260,4 +279,171 @@ export default function Survey() {
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col space-y-4">
-            
+            <div className="flex flex-col items-center md:gap-5 md:flex-row">
+              <label htmlFor="name" className="md:w-[150px] text-xl">
+                Name <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row">
+              <label htmlFor="email" className="md:w-[150px] text-xl">
+                Email <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row">
+              <label htmlFor="phone" className="md:w-[150px] text-xl">
+                Phone <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row">
+              <label htmlFor="linkedlist" className="md:w-[150px] text-xl">
+                Location
+              </label>
+              <input
+                type="text"
+                id="linkedlist"
+                name="linkedlist"
+                value={form.linkedlist}
+                onChange={(e) => setForm({ ...form, linkedlist: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+              />
+            </div>
+
+
+            <div className="flex flex-col items-center md:gap-5 md:flex-row hidden">
+              <label htmlFor="country" className="md:w-[150px] text-xl">
+                Country <span className="text-red-700">*</span>
+              </label>
+
+
+              <select
+                id="country"
+                name="country"
+                value={form.country}
+                onChange={handleChange}
+                className="rounded-md p-2 focus:outline-none w-[240px] focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+                readOnly
+              >
+                <option value="">Select a country</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+
+
+            <div className="flex flex-col items-center md:gap-5 md:flex-row hidden">
+              <label htmlFor="city" className="md:w-[150px] text-xl">
+                City <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={form.city}
+                onChange={(e) => setForm({ ...form, city: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+                
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row hidden">
+              <label htmlFor="postal" className="md:w-[150px] text-xl">
+                Postal Code <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="text"
+                id="postal"
+                name="postal"
+                value={form.postal}
+                onChange={(e) => setForm({ ...form, postal: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+              />
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row hidden">
+              <label htmlFor="gender" className="md:w-[150px] text-xl">
+                Gender <span className="text-red-700">*</span>
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={form.gender}
+                onChange={(e) => setForm({ ...form, gender: e.target.value })}
+                className="rounded-md p-2 w-[240px] focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f] hidden"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="flex flex-col items-center md:gap-5 md:flex-row hidden">
+              <label htmlFor="age" className="md:w-[150px] text-xl">
+                Age <span className="text-red-700">*</span>
+              </label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={form.age}
+                onChange={(e) => setForm({ ...form, age: e.target.value })}
+                className="rounded-md p-2 focus:outline-none focus:bg-white text-black shadow border-2 bg-transparent border-[#ffffff8f]"
+                // required
+              />
+            </div>
+            {error && <p className="text-red-500">{error}</p>}
+            <button
+              type="submit"
+              className="bg-[#ca11e8] hover:bg-[#3043c6] text-white rounded-md p-2 focus:outline-none"
+            >
+              Submit
+            </button>
+            {user && (
+              <div className="flex gap-1 justify-center">
+                <h1 className="text-md font-bold text-[#b6b3b3] text-black text-center">
+                  Want to Sign Out?
+                </h1>
+                <button
+                  onClick={handleLogout}
+                  className="text-black rounded hover:font-bold hover:underline"
+                >
+                  Sign out
+                </button>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
+    </main>
+  );
+}
