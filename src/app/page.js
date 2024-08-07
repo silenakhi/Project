@@ -52,7 +52,8 @@ const login = ()=>{
         }
     }
 
-
+    const signIn = router.push("/survey")
+    
     return (
       <div className="flex flex-col md:flex-row h-screen">
         <div className="flex flex-col justify-center items-center w-full bg-gray-100 p-6 md:p-12 shadow-lg">
@@ -83,7 +84,7 @@ const login = ()=>{
                   </span>
                 </button>
                 <button
-                  onClick= router.push("/survey")
+                  onClick={signIn}
                   className="flex gap-3 justify-center items-center bg-grey-700 text-white hover:bg-black-800 focus:outline-none focus:ring-2 focus:ring-black-700 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
                 >
                   <span className="text-lg font-medium">
