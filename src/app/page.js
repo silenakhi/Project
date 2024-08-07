@@ -52,7 +52,14 @@ const login = ()=>{
         }
     }
 
-    const signIn = router.push("/survey")
+    const signIn = async ()=>{
+        try{
+            router.push("/survey")
+                    }
+        catch(error){
+            console.error("Error signing in with Facebook",error.message)
+        }    
+    }
     
     return (
       <div className="flex flex-col md:flex-row h-screen">
