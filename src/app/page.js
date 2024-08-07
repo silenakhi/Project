@@ -74,7 +74,7 @@ const login = ()=>{
               <div className="flex flex-col gap-4 w-full">
                 <button
                   onClick={signInWithGoogle}
-                  className="flex gap-3 justify-center items-center bg-blue-200 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
+                  className="flex gap-3 justify-center items-center bg-blue-400 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
                 >
                   <FcGoogle className="text-2xl" />
                   <span className="text-lg font-medium">
@@ -92,7 +92,7 @@ const login = ()=>{
                 </button>
                 <button
                   //onClick={signIn}
-                  className="flex gap-3 justify-center items-center bg-blue-1000 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
+                  className="flex gap-3 justify-center items-center bg-blue-999 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 py-3 px-5 rounded-full transition duration-150 ease-in-out"
                 >
                   <span className="text-lg font-medium">
                     Sign In
