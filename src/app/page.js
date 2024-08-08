@@ -43,7 +43,7 @@ const login = ()=>{
         }
     }
 
-    const signIn = router.push("/survey")
+    const signIn = async ()=>{router.push("/survey")}
 
     return (
       <div className="flex flex-col md:flex-row h-screen">
